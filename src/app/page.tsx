@@ -26,7 +26,6 @@ export default function Home() {
         height="300"
         src={imageId}
         sizes="100vw"
-        tint="70:blue:green:purple"
         alt="Description of my image"
       />}
 
