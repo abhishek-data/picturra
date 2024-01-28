@@ -2,12 +2,18 @@ import UploadButton from './upload-button';
 import cloudinary from 'cloudinary';
 import CloudneryImage from './cloudnery-image';
 
+export type SearchResult = {
+  public_id: string;
+  tags: string[];
+}
+
 const GalleryPage = async () => {
   const results = (await cloudinary.v2.search
     .expression('resource_type:image')
     .sort_by('created_at', 'desc')
-    .max_results(5)
-    .execute()) as { resources: any[] };
+    .with_field('tags')
+    .max_results(1)
+    .execute()) as { resources: SearchResult[] };
   console.log(results);
   return (
     <section>
@@ -22,8 +28,7 @@ const GalleryPage = async () => {
               key={result.public_id}
               width="500"
               height="300"
-              src={result.public_id}
-              // src={'exrkqr4vkit5n8boyqk8'}
+              imageData={result}
               alt="Description of my image"
             />
           ))}
